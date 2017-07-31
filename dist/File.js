@@ -1,8 +1,5 @@
 const path = require('path')
 
-
-
-
 exports.File = class File {
 
   constructor(path = '', name = '', id = name) {
@@ -12,7 +9,7 @@ exports.File = class File {
     this.dependencies = []
     this.path = path
     this.name = name
-    this.dirName = ''
+    this.dirName = name
     this.created = false
     // going to be overrided based on its position in the graph
     this.absolutePath = this.getFullPath()
@@ -41,7 +38,9 @@ exports.File = class File {
     if (start.id == toFind.id) return path
 
     Q.push(start)
+
     if (wentDown) return this.searchInChildren(start, path, toFind, Q)
+
     return this.searchInChildren(start, path, toFind, Q) || this.searchInParent(start, path, toFind, Q)
   }
 
@@ -51,7 +50,7 @@ exports.File = class File {
 
   searchInChildren(start, path, toFind, Q) {
     for (let dep of start.children) {
-      var realPath = this.findFileFromNodeInner(dep, path + '/' + dep.name, toFind, true, Q)
+      var realPath = this.findFileFromNodeInner(dep, path + '/' + dep.dirName, toFind, true, Q)
       if (realPath != false) return realPath
     }
     return false

@@ -1,29 +1,32 @@
 const path = require('path')
 const fs = require('fs')
 const mkdirp = require('mkdirp');
+const colors = require('colors');
 
 exports.App = class App {
 
   createDependencies(file, destination) {
     const dependencies = file.children
-    const newPath = destination + '/' + file.name
-    console.log(newPath)
+    const newPath = destination + '/' + file.dirName
+
     dependencies.forEach(file => this.createFile(file, destination))
   }
 
   createFile(file, destination) {
     if (file.created) return
     
-    destination = destination + '/' + file.name
+    destination = destination + '/' + file.dirName
+    
     const filePath = destination + '/' + file.name + '.' + file.extension
-    const dirName = path.dirname(destination)
 
     mkdirp(destination, (err) => {
       if (err) throw err
 
       fs.writeFile(filePath, file.render(), (err) => {
-        if (err) throw err;
-        console.log(`${file.name} saved into ${destination}`);
+        if (err) throw err
+
+        console.log(`${colors.underline(file.name)} ${colors.green('saved')} into ${colors.italic(destination)}`)
+
         file.path = destination
       })
 
@@ -40,8 +43,10 @@ exports.App = class App {
     if(file.writted) return
 
     fs.writeFile(file.path + '/' + file.name + '.' + file.extension, file.render(), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
+        if (err) throw err
+
+         console.log(`Template ${colors.green('rendered')} into ${colors.underline(file.name)}`)
+
          file.writted = true
          file.children.forEach(file => this.renderFile(file))
       })
