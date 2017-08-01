@@ -10,6 +10,7 @@ exports.File = class File {
     this.path = path
     this.name = name
     this.dirName = name
+    this.template = 'Hello World!'
     this.created = false
     // going to be overrided based on its position in the graph
     this.absolutePath = this.getFullPath()
@@ -17,10 +18,10 @@ exports.File = class File {
     this.parent = null
   }
 
-  template() {
+  createTemplate() {
     const imports = this.dependencies.map(dep => `import ${dep.name} from .${this.findPathFromFile(this,"",dep)+ '/' + dep.name +'.' + dep.extension}\n`)
 
-    return imports.join('') + 'Hello World!'
+    return imports.join('') + this.template
   }
 
   findPathFromFile(start, path, toFind) {
@@ -57,7 +58,7 @@ exports.File = class File {
   }
 
   render() {
-    return this.template()
+    return this.createTemplate()
   }
 
   getFullPath() {

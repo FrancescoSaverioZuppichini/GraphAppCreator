@@ -26,7 +26,7 @@ file3.dependencies = [file1]
 
 const drawIoGraphBuilder = new DrawIoGraphBuilder()
 
-const root = drawIoGraphBuilder.build('./test/test2.xml',VueFile,(root)=>{
+const root = drawIoGraphBuilder.build('./test/small.xml',VueFile,(root)=>{
     app.create('destination',root)
 })
 

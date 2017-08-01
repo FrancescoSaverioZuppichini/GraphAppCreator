@@ -14,13 +14,23 @@ exports.App = class App {
 
   createFile(file, destination) {
     if (file.created) return
-    
+
     destination = destination + '/' + file.dirName
-    
+
     const filePath = destination + '/' + file.name + '.' + file.extension
 
     mkdirp(destination, (err) => {
       if (err) throw err
+
+      if(fs.existsSync(filePath)){
+        fs.readFile(filePath,'utf8',(err,data) => {
+          file.template = data
+          file.path = destination
+        file.created = true
+
+        this.createDependencies(file, destination)
+        })
+      } else {
 
       fs.writeFile(filePath, file.render(), (err) => {
         if (err) throw err
@@ -28,36 +38,35 @@ exports.App = class App {
         console.log(`${colors.underline(file.name)} ${colors.green('saved')} into ${colors.italic(destination)}`)
 
         file.path = destination
+        file.created = true
+
+        this.createDependencies(file, destination)
       })
-
-      file.created = true
-
-      this.createDependencies(file, destination)
-
+      }
     })
 
 
   }
 
-  renderFile(file){
-    if(file.writted) return
+  renderFile(file) {
+    if (file.writted) return
 
     fs.writeFile(file.path + '/' + file.name + '.' + file.extension, file.render(), (err) => {
-        if (err) throw err
+      if (err) throw err
 
-         console.log(`Template ${colors.green('rendered')} into ${colors.underline(file.name)}`)
+      console.log(`Template ${colors.green('rendered')} into ${colors.underline(file.name)}`)
 
-         file.writted = true
-         file.children.forEach(file => this.renderFile(file))
-      })
+      file.writted = true
+      file.children.forEach(file => this.renderFile(file))
+    })
   }
 
   create(destination = '', root) {
     this.createFile(root, destination)
-    setTimeout(()=>{
-          this.renderFile(root)
+    setTimeout(() => {
+      this.renderFile(root)
 
-    },1000)
+    }, 1000)
   }
 
   addWatchers() {
