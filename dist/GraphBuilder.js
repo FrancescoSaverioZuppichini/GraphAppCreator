@@ -1,4 +1,4 @@
-const errors = require('erros.js')
+const errors = require('./errors.js')
 
 exports.GraphBuilder = class GraphBuilder {
 

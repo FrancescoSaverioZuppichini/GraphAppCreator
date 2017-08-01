@@ -13,7 +13,8 @@
   "dependencies": {
     "colors": "^1.1.2",
     "mkdirp": "^0.5.1",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",

@@ -2,7 +2,7 @@ const path = require('path')
 
 exports.File = class File {
 
-  constructor(path = '', name = '', id = name) {
+  constructor({path = '', name = '', id = name}) {
     this.id = id
     this.type = 'TEXT'
     this.extension = 'txt'
