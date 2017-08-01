@@ -11,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "colors": "^1.1.2",
     "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^5.0.1",
     "nodemon": "^1.11.0",
     "xml2js": "^0.4.17"
   },

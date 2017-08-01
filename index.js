@@ -1,9 +1,10 @@
-const {App} = require('./dist/App.js')
-const {File} = require('./dist/File.js')
-const {VueFile} =  require('./dist/Vue/VueFile.js')
-const {DrawIoGraphBuilder} =  require('./dist/DrawIo/DrawIoGraphBuilder.js')
+const {App, File} = require('./src/index.js')
+const {VueApp} = require('./Vue/VueApp.js')
 
-const app = new App()
+const {VueFile} =  require('./Vue/VueFile.js')
+const {DrawIoGraphBuilder} =  require('./DrawIo/DrawIoGraphBuilder.js')
+
+const app = new VueApp()
 
 // var file1 = new File('','file1');
 // var file2 = new File('','file2');
@@ -26,7 +27,7 @@ file3.dependencies = [file1]
 
 const drawIoGraphBuilder = new DrawIoGraphBuilder()
 
-const root = drawIoGraphBuilder.build('./test/small.xml',VueFile,(root)=>{
+const root = drawIoGraphBuilder.build('./test/app3.xml',VueFile,(root)=>{
     app.create('destination',root)
 })
 
