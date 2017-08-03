@@ -1,5 +1,6 @@
 const {
-  File
+  File,
+  filePathFinder
 } = require('../src/index.js')
 const path = require('path')
 
@@ -39,11 +40,11 @@ exports.VueFile = class VueFile extends File {
 
     return importPath
   }
-
+  
   update(text) {
 
     const imports = this.dependencies.map(dep => {
-      const pathNormalized = `${this.normalize(path.normalize(this.findPathFromFile(this,"",dep)+ '/' + dep.name +'.' + dep.extension))}`
+      const pathNormalized = `${this.normalize(path.normalize(filePathFinder.findPathFromFile(this,"",dep)+ '/' + dep.name +'.' + dep.extension))}`
       const importText = `import ${dep.name} from '${pathNormalized}'`
       const regexImport = `import[\\s]*${dep.name}.*`
 
@@ -55,6 +56,7 @@ exports.VueFile = class VueFile extends File {
         return importText + '\n'
       }
     })
+
     if (!this.updated) text = text.replace(/<script>/gm, `<script>\n${imports.join('')}`)
     else {
       text = text.replace(/<script>/gm, `<script>${imports.join('')}`)

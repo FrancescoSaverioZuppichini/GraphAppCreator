@@ -22,10 +22,10 @@ exports.App = class App {
 
   }
 
+  writeFile(file) {}
 
   createFile(file) {
     if (file.created) return
-
 
     mkdirp(path.dirname(file.path), (err) => {
       if (err) throw err
@@ -36,11 +36,16 @@ exports.App = class App {
           if (err) throw err
 
           file.template = data
-          file.created = true
-          
-          console.log(`${colors.underline(file.name)} ${colors.green('updated')}`)
+          file.updated = true
 
-          file.children.forEach(file => this.createFile(file))
+          fs.writeFile(file.path, file.render(), (err) => {
+            if (err) throw err
+
+            console.log(`${colors.underline(file.name)} ${colors.green('updated')}`)
+
+            file.children.forEach(file => this.createFile(file))
+
+          })
         })
       } else {
 
@@ -55,9 +60,8 @@ exports.App = class App {
         })
       }
     })
-
-
   }
+
   renderFile(file) {
     if (file.writted) return
 

@@ -9,15 +9,12 @@ exports.VueApp = class VueApp extends App {
 
     this.createPath(root, destination,false)
 
-    
     root.children.forEach(child => {
+      // first level must be in the components folder
       child.dirName = '/components/' + child.name
       this.createPath(child,destination)
     })
     
-
     this.createFile(root, destination)
-    
-
   }
 }
