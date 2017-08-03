@@ -1,6 +1,6 @@
 const path = require('path')
 const fs = require('fs')
-const mkdirp = require('mkdirp');
+const mkdirp = require('mkdirp')
 const colors = require('colors');
 
 exports.App = class App {
@@ -9,45 +9,55 @@ exports.App = class App {
     const dependencies = file.children
     // const newPath = destination + '/' + file.dirName
 
-    dependencies.forEach(file => this.createFile(file, destination))
+    dependencies.forEach(file => this.createPath(file, destination))
   }
 
-  createFile(file, destination, createDependencies = true) {
+  createPath(file, destination, createDependencies = true) {
     if (file.created) return
 
     destination = destination + '/' + file.dirName
+    file.path = path.normalize(destination + '/' + file.name + '.' + file.extension)
 
-    const filePath = destination + '/' + file.name + '.' + file.extension
+    if (createDependencies) this.createDependencies(file, destination)
 
-    mkdirp(destination, (err) => {
+  }
+
+
+  createFile(file) {
+    if (file.created) return
+
+
+    mkdirp(path.dirname(file.path), (err) => {
       if (err) throw err
-      file.updated = false
-      file.created = false
-      if (fs.existsSync(filePath)) {
-        fs.readFile(filePath, 'utf8', (err, data) => {
+
+      if (fs.existsSync(file.path)) {
+
+        fs.readFile(file.path, 'utf8', (err, data) => {
+          if (err) throw err
+
           file.template = data
-          file.path = destination
-          file.updated = true
-         if (createDependencies) this.createDependencies(file, destination)
+          file.created = true
+          
+          console.log(`${colors.underline(file.name)} ${colors.green('updated')}`)
+
+          file.children.forEach(file => this.createFile(file))
         })
       } else {
 
-        fs.writeFile(filePath, file.render(), (err) => {
+        fs.writeFile(file.path, file.render(), (err) => {
           if (err) throw err
 
-          console.log(`${colors.underline(file.name)} ${colors.green('saved')} into ${colors.italic(destination)}`)
+          console.log(`${colors.underline(file.name)} ${colors.green('saved')} into ${colors.italic(file.path)}`)
 
-          file.path = destination
           file.created = true
-         if (createDependencies) this.createDependencies(file, destination)
 
+          file.children.forEach(file => this.createFile(file))
         })
       }
     })
 
 
   }
-
   renderFile(file) {
     if (file.writted) return
 
@@ -62,7 +72,8 @@ exports.App = class App {
   }
 
   create(destination = '', root) {
-    this.createFile(root, destination)
+    this.createPath(root, destination)
+    this.createFile(root)
   }
 
   addWatchers() {

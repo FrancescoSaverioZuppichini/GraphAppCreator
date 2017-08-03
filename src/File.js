@@ -1,19 +1,31 @@
 const path = require('path')
 
+/**
+ * The File class abstract a file adding
+ * new fields in order to be identified as 
+ * a node in the app's graph
+ */
 exports.File = class File {
 
-  constructor({path = '', name = '', id = name}) {
+  constructor({ path = '', name = '', id = name }) {
     this.id = id
     this.type = 'TEXT'
     this.extension = 'txt'
-    this.dependencies = []
+    // total path from the root folder
     this.path = path
     this.name = name
+    // name of the first-up directory, by default
+    // is the File's name itself
     this.dirName = name
+    // string to be rendered into the file
     this.template = 'Hello World!'
+    // life-cycle flags
     this.created = false
-    // going to be overrided based on its position in the graph
-    this.absolutePath = this.getFullPath()
+    this.writted = false
+    this.update = false
+    // files to be imported
+    this.dependencies = []
+    // graph logic 
     this.children = []
     this.parent = null
   }
@@ -61,7 +73,4 @@ exports.File = class File {
     return this.createTemplate()
   }
 
-  getFullPath() {
-    return path.normalize(this.path + this.name + '.' + this.extension)
-  }
 }
