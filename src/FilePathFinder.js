@@ -1,29 +1,9 @@
-const path = require('path')
 
-exports.File = class File {
-
-  constructor({path = '', name = '', id = name}) {
-    this.id = id
-    this.type = 'TEXT'
-    this.extension = 'txt'
-    this.dependencies = []
-    this.path = path
-    this.name = name
-    this.dirName = name
-    this.template = 'Hello World!'
-    this.created = false
-    // going to be overrided based on its position in the graph
-    this.absolutePath = this.getFullPath()
-    this.children = []
-    this.parent = null
-  }
-
-  createTemplate() {
-    const imports = this.dependencies.map(dep => `import ${dep.name} from .${this.findPathFromFile(this,"",dep)+ '/' + dep.name +'.' + dep.extension}\n`)
-
-    return imports.join('') + this.template
-  }
-
+/**
+ * This class provide a way to find the path from
+ * one file to another
+ */
+class FilePathFinder {
   findPathFromFile(start, path, toFind) {
     var Q = []
     return this.findFileFromNodeInner(start, path, toFind, false, Q)
@@ -57,11 +37,7 @@ exports.File = class File {
     return false
   }
 
-  render() {
-    return this.createTemplate()
-  }
-
-  getFullPath() {
-    return path.normalize(this.path + this.name + '.' + this.extension)
-  }
 }
+
+
+exports.filePathFinder = new FilePathFinder()
