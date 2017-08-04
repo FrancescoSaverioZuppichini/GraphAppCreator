@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { program } = require('graph2app-core')
 
 const { VueApp, VueFile } = require('graph2app-vue-core')

@@ -1,31 +1,23 @@
 {
   "name": "graph2app-drawio2vuejs",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "",
   "main": "index.js",
-   "bin": {
+  "preferGlobal": "true",
+  "directories": {
+    "bin": "./bin"
+  },
+  "bin": {
     "drawio2vuejs": "index.js"
   },
   "scripts": {
-    "test": "mocha-webpack --watch ./test/test.js",
-    "build": "babel ./index.js --presets babel-preset-es2015 --out-dir distribution",
-    "prepublish": "npm run build"
+    "run": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "graph2app-core": "^0.0.2",
-    "graph2app-drawio-graph-builder": "0.0.1",
+    "graph2app-drawio-graph-builder": "^0.0.1",
     "graph2app-vue-core": "^0.0.1"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.23.0",
-    "babel-loader": "^6.4.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-es2015": "^6.22.0",
-    "mocha": "^3.4.2",
-    "mocha-loader": "^1.1.1",
-    "mocha-webpack": "^1.0.0-beta.1",
-    "webpack": "^2.6.1"
   }
 }
