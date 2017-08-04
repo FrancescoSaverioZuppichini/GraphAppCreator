@@ -1,4 +1,4 @@
-const { GraphBuilder } = require('../src/index.js')
+const { GraphBuilder } = require('graph2app-core')
 const parseString = require('xml2js').parseString
 // const {Resource} = require('resouce-class')
 const fs = require('fs')

@@ -1,7 +1,7 @@
 const {
   File,
   filePathFinder
-} = require('../src/index.js')
+} = require('graph2app-core')
 const path = require('path')
 
 var vueComponent = `<template>

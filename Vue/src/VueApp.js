@@ -1,4 +1,4 @@
-const { App } = require('../src/index.js')
+const { App } = require('graph2app-core')
 
 const path = require('path')
 

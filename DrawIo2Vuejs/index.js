@@ -1,14 +1,8 @@
-const {
-  program
-} = require('../src/index.js')
-const {
-  VueApp
-} = require('../Vue/VueApp.js')
-const {
-  VueFile
-} = require('../Vue/VueFile.js')
+const { program } = require('graph2app-core')
 
-const { DrawIoGraphBuilder } = require('../DrawIo/DrawIoGraphBuilder.js')
+const { VueApp, VueFile } = require('graph2app-vue-core')
+
+const { DrawIoGraphBuilder } = require('graph2app-drawio-graph-builder')
 
 const drawIoGraphBuilder = new DrawIoGraphBuilder()
 
