@@ -62,7 +62,7 @@ exports.VueFile = class VueFile extends File {
       text = text.replace(/<script>/gm, `<script>${imports.join('')}`)
     }
     
-    text = text.replace(/components[\s]*:[\s]*{[\s\S]*}/gm, `components: {\n\t\t${this.dependencies.map(dep => dep.name).join(',\n\t\t')}\n\t}`)
+    text = text.replace(/components[\s]*:[\s]*{[\s]*.*[\s]*}/gm, `components: {\n\t\t${this.dependencies.map(dep => dep.name).join(',\n\t\t')}\n\t}`)
 
     return text
 
