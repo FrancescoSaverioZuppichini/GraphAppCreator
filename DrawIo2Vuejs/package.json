@@ -1,8 +1,11 @@
 {
-  "name": "graph2app-vue-drawio",
+  "name": "graph2app-drawio2vuejs",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+   "bin": {
+    "drawio2vuejs": "index.js"
+  },
   "scripts": {
     "test": "mocha-webpack --watch ./test/test.js",
     "build": "babel ./index.js --presets babel-preset-es2015 --out-dir distribution",
@@ -11,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graph2app-core": "0.0.1",
-    "graph2app-vue-core": "0.0.1",
-    "graph2app-drawio-graph-builder": "0.0.1"
+    "graph2app-core": "^0.0.2",
+    "graph2app-drawio-graph-builder": "0.0.1",
+    "graph2app-vue-core": "^0.0.1"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",

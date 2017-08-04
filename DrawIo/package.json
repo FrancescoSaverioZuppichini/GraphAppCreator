@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graph2app-core": "0.0.1",
+    "graph2app-core": "^0.0.2",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {

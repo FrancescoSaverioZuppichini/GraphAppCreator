@@ -21,6 +21,7 @@ try {
   const root = drawIoGraphBuilder.build(program.xml, VueFile, (root) => {
     app.create(program.dist, root)
   })
+  
 } catch (e) {
   console.log(e.message)
   console.log("use --help for more information");

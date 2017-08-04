@@ -1,5 +1,7 @@
-const { DrawIoGraphBuilder } = require('./DrawIoGraphBuilder')
+const { VueApp } = require('./VueApp')
+const { VueFile } = require('./VueFile')
 
 module.exports = {
-    DrawIoGraphBuilder
+    VueApp,
+    VueFile
 }   
