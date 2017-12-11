@@ -1,5 +1,5 @@
 # GraphAppCreator
-## A General Structure to define custom Application using a Graph Structured
+## A General Structure to define custom Application using a Graph
 
 ### Overview
 The repository is structured as follow:
