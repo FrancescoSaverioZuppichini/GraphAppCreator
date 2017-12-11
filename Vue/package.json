@@ -1,11 +1,11 @@
 {
   "name": "graph2app-vue-core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "./src/index.js",
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graph2app-core": "~0.0.2"
+    "graph2app-core": "^0.0.4"
   }
 }

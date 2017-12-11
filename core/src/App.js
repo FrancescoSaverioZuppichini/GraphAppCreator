@@ -5,29 +5,27 @@ const colors = require('colors');
 
 exports.App = class App {
 
-  createDependencies(file, destination) {
+  createDependencies (file, destination) {
     const dependencies = file.children
     // const newPath = destination + '/' + file.dirName
-
     dependencies.forEach(file => this.createPath(file, destination))
   }
 
-  createPath(file, destination, createDependencies = true) {
+  createPath (file, destination, createDependencies = true) {
     if (file.created) return
-
-    destination = destination + '/' + file.dirName
-    file.path = path.normalize(destination + '/' + file.name + '.' + file.extension)
-
-    if (createDependencies) this.createDependencies(file, destination)
-
+    destination = `${destination}/${file.dirName}`
+    file.path = path.normalize(`${destination}/index.${file.extension}`)
+    if (createDependencies) {
+      this.createDependencies(file, destination)
+    }
   }
 
-  writeFile(file) {}
+  writeFile (file) {}
 
-  createFile(file) {
+  createFile (file) {
     if (file.created) return
 
-    mkdirp(path.dirname(file.path), (err) => {
+    mkdirp (path.dirname(file.path), (err) => {
       if (err) throw err
 
       if (fs.existsSync(file.path)) {
@@ -42,9 +40,7 @@ exports.App = class App {
             if (err) throw err
 
             console.log(`${colors.underline(file.name)} ${colors.green('updated')}`)
-
             file.children.forEach(file => this.createFile(file))
-
           })
         })
       } else {
@@ -53,38 +49,31 @@ exports.App = class App {
           if (err) throw err
 
           console.log(`${colors.underline(file.name)} ${colors.green('saved')} into ${colors.italic(file.path)}`)
-
           file.created = true
-
           file.children.forEach(file => this.createFile(file))
         })
       }
     })
   }
 
-  renderFile(file) {
+  renderFile (file) {
     if (file.writted) return
 
-    fs.writeFile(file.path + '/' + file.name + '.' + file.extension, file.render(), (err) => {
+    fs.writeFile(`${file.path}/${file.name}/index.${file.extension}`, file.render(), (err) => {
       if (err) throw err
 
       console.log(`Template ${colors.green('rendered')} into ${colors.underline(file.name)}`)
-
       file.writted = true
       file.children.forEach(file => this.renderFile(file))
     })
   }
 
-  create(destination = '', root) {
+  create (destination = '', root) {
     this.createPath(root, destination)
     this.createFile(root)
   }
 
-  addWatchers() {
+  addWatchers() {}
 
-  }
-
-  update() {
-
-  }
+  update() {}
 }
