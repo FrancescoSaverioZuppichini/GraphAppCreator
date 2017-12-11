@@ -1,9 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require('graph2app-core')
-
-const { VueApp, VueFile } = require('graph2app-vue-core')
-
+const { VueApp, VueFile } = require('graph2app-drawio2vuejs')
 const { DrawIoGraphBuilder } = require('graph2app-drawio-graph-builder')
 
 const drawIoGraphBuilder = new DrawIoGraphBuilder()
@@ -15,7 +13,7 @@ program
 
 try {
   if (program.xml == undefined || program.dist == undefined) {
-    throw new Error("options xml and dist must be provided, use --help")
+    throw new Error('options xml and dist must be provided, use --help')
   }
 
   const app = new VueApp()
@@ -23,8 +21,8 @@ try {
   const root = drawIoGraphBuilder.build(program.xml, VueFile, (root) => {
     app.create(program.dist, root)
   })
-  
+
 } catch (e) {
   console.log(e.message)
-  console.log("use --help for more information");
+  console.log('use --help for more information')
 }

@@ -2,12 +2,12 @@ const path = require('path')
 const { filePathFinder } = require('./FilePathFinder.js')
 /**
  * The File class abstract a file adding
- * new fields in order to be identified as 
+ * new fields in order to be identified as
  * a node in the app's graph
  */
 exports.File = class File {
 
-  constructor({ path = '', name = '', id = name }) {
+  constructor ({ path = '', name = '', id = name }) {
     this.id = id
     this.type = 'TEXT'
     this.extension = 'txt'
@@ -25,19 +25,17 @@ exports.File = class File {
     this.updated = false
     // files to be imported
     this.dependencies = []
-    // graph logic 
+    // graph logic
     this.children = []
     this.parent = null
   }
 
-  createTemplate() {
-    const imports = this.dependencies.map(dep => `import ${dep.name} from .${filePathFinder.filePathFinder(this,"",dep)+ '/' + dep.name +'.' + dep.extension}\n`)
-
+  createTemplate () {
+    const imports = this.dependencies.map(dep => `import ${dep.name} from .${filePathFinder.filePathFinder(this, '', dep) + '/' + dep.name + '.' + dep.extension}\n`)
     return imports.join('') + this.template
   }
 
-  render() {
+  render () {
     return this.createTemplate()
   }
-
 }

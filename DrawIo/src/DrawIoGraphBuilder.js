@@ -1,41 +1,41 @@
+const fs = require('fs')
 const { GraphBuilder } = require('graph2app-core')
 const parseString = require('xml2js').parseString
 // const {Resource} = require('resouce-class')
-const fs = require('fs')
 
 exports.DrawIoGraphBuilder = class DrawIoGraphBuilder extends GraphBuilder {
 
   createNodes(rawNodes, File) {
-
     return rawNodes.map(rawNode => new File({
       name: rawNode.$.value,
       id: rawNode.$.id
     }))
-
   }
 
   createCache(files) {
-    var cache = {}
-
+    const cache = {}
     files.forEach(file => cache[file.id] = file)
-
     return cache
   }
 
   linkChildren(edges, files, cache) {
-    edges.forEach(edge => {
+    edges.forEach((edge) => {
       var target = cache[edge.$.target]
       var source = cache[edge.$.source]
-      if (target.children.indexOf(source) < 0) target.children.push(source)
+      if (target.children.indexOf(source) < 0) {
+        target.children.push(source)
+      }
       source.parent = target
     })
   }
 
   linkDependencies(edges, files, cache) {
-    edges.forEach(edge => {
+    edges.forEach((edge) => {
       var target = cache[edge.$.target]
       var source = cache[edge.$.source]
-      if (source.dependencies.indexOf(target) < 0) source.dependencies.push(target)
+      if (source.dependencies.indexOf(target) < 0) {
+        source.dependencies.push(target)
+      }
     })
   }
 
@@ -62,7 +62,7 @@ exports.DrawIoGraphBuilder = class DrawIoGraphBuilder extends GraphBuilder {
         const graphRoot = cache[nodes[0].$.id]
         // pass root to call back
         cb(graphRoot)
-      });
+      })
     })
   }
 }

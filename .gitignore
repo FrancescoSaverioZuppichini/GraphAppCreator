@@ -1,3 +1,4 @@
 node_modules/
-*.xml
 destination/
+App/
+*.xml
