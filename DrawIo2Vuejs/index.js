@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require('graph2app-core')
-const { VueApp, VueFile } = require('graph2app-drawio2vuejs')
+const { VueApp, VueFile } = require('graph2app-vue-core')
 const { DrawIoGraphBuilder } = require('graph2app-drawio-graph-builder')
 
 const drawIoGraphBuilder = new DrawIoGraphBuilder()
